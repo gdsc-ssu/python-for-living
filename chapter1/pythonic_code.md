@@ -80,7 +80,7 @@ List comprehension: 0.245245 seconds
 ### 언패킹 (Unpacking) 
 - **언패킹 (Unpacking)** 언패킹은 튜플이나 리스트 같은 시퀀스 자료형의 요소들을 여러 변수에 한 번에 할당하는 기능이다. 
 - **예시:**
-```Python
+```python
 # 기본 언패킹
 a, b, c = (1, 2, 3)
 print(a, b, c) # 1 2 3
@@ -172,7 +172,7 @@ print(next(gen))  # 3
         - `yield`를 통해 값을 하나씩 반환하고, 함수의 상태는 그대로 유지된다.
         - 다음에 `next()` 함수로 호출되면 이전에 멈췄던 지점부터 다시 실행된다.
 - **예시:** 1부터 n까지의 숫자를 생성하는 제너레이터
-```Python
+```python
 def number_generator(n):
 	print("Generator starts")
 	for i in range(1, n + 1):
@@ -205,7 +205,7 @@ print(next(my_gen)) # 2 yielded, 3 출력
     - `==` 연산자를 사용하여 두 객체의 **내용이 같은지** 비교할 때 호출된다.
     - 이 메서드를 구현하지 않으면, 기본적으로 두 객체의 메모리 주소를 비교한다.
 - **예시:**
-```Python
+```python
 class Person:
 	def __init__(self, name, age):
 		self.name = name
@@ -241,7 +241,7 @@ print(p1 == p3)    # __eq__ 호출 -> False
 함수를 인자로 받아서, 새로운 기능이 추가된 또 다른 함수를 반환하는 형태로 동작한다.
 - 주로 로깅, 실행 시간 측정, 접근 제어 등 AOP(관점 지향 프로그래밍)에 유용하게 사용된다.
 - **기본 구조:**
-```Python
+```python
 def decorator_function(original_function):
 	def wrapper_function(*args, **kwargs):
 		# --- 함수 실행 전 처리 ---
@@ -256,7 +256,7 @@ def decorator_function(original_function):
 ```
 - **사용법 (`@` 구문):** 기능을 추가하고 싶은 함수 위에 `@데코레이터_이름`을 붙여준다
 - **예시:** 함수의 실행 시간을 측정하는 데코레이터
-```Python
+```python
 import time
 
 def measure_time(func):
