@@ -92,6 +92,79 @@ print(body)  # [20, 30, 40]
 print(tail)  # 50
 ```
 
+### 이터레이터 (Iterator)
+
+이터레이터는 파이썬에서 **반복 가능한 객체(iterable)**를 순회할 때 사용되는 객체이다. 
+이터레이터는 `__iter__()`와 `__next__()` 메서드를 구현한 객체로, 한 번에 하나씩 요소를 반환하며 순회 상태를 기억한다.
+
+#### 이터레이터의 특징
+- **지연 평가(Lazy Evaluation)**: 필요할 때만 값을 생성하므로 메모리 효율적이다
+- **상태 유지**: 현재 위치를 기억하고 다음 호출 시 그 다음 요소를 반환한다
+
+#### 이터레이터 vs 이터러블
+- **이터러블(Iterable)**: `__iter__()` 메서드를 가진 객체 (리스트, 튜플, 문자열 등)
+- **이터레이터(Iterator)**: `__iter__()`와 `__next__()` 메서드를 모두 가진 객체
+
+#### 기본 사용법
+```python
+# 리스트는 이터러블이지만 이터레이터는 아니다
+my_list = [1, 2, 3, 4, 5]
+print(hasattr(my_list, '__iter__'))  # True
+print(hasattr(my_list, '__next__'))  # False
+
+# iter() 함수로 이터레이터 생성
+my_iterator = iter(my_list)
+print(hasattr(my_iterator, '__next__'))  # True
+
+# next() 함수로 요소 하나씩 가져오기
+print(next(my_iterator))  # 1
+print(next(my_iterator))  # 2
+print(next(my_iterator))  # 3
+```
+
+#### 커스텀 이터레이터 클래스
+```python
+class CountDown:
+    def __init__(self, start):
+        self.current = start
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.current <= 0:
+            raise StopIteration
+        else:
+            self.current -= 1
+            return self.current + 1
+
+# 사용 예시
+counter = CountDown(5)
+for num in counter:
+    print(num)  # 5, 4, 3, 2, 1
+
+# 또는 next() 함수로 직접 사용
+counter2 = CountDown(3)
+print(next(counter2))  # 3
+print(next(counter2))  # 2
+print(next(counter2))  # 1
+```
+
+#### 제너레이터와의 관계
+제너레이터는 이터레이터의 한 종류로, `yield` 키워드를 사용하여 더 간단하게 이터레이터를 만들 수 있다:
+```python
+def countdown_generator(start):
+	yield start
+	yield start+1
+	yield start+2
+
+# 제너레이터는 자동으로 이터레이터가 된다
+gen = countdown_generator(1)
+print(next(gen))  # 1
+print(next(gen))  # 2
+print(next(gen))  # 3
+```
+
 ### 제너레이터 (Generator) 
 - **제너레이터 (Generator)** 제너레이터는 모든 값을 메모리에 올리지 않고, 필요할 때마다 값을 하나씩 생성하여 반환하는 **이터레이터(iterator)**를 만드는 기능이다. 
 - 대용량 데이터를 처리할 때 메모리 효율성을 극대화할 수 있다. 함수 내에서 `yield` 키워드를 사용한다.
@@ -217,6 +290,7 @@ slow_function(2)
 
 - https://docs.python.org/ko/3.13/tutorial/controlflow.html#unpacking-argument-lists
 - https://docs.python.org/ko/3.13/reference/datamodel.html#special-method-names
+- https://wikidocs.net/134909
 - https://wikidocs.net/192021
 - https://docs.python.org/ko/3.13/tutorial/datastructures.html#list-comprehensions
 - https://docs.python.org/ko/3.13/tutorial/classes.html#iterators
